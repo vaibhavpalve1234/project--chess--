@@ -33,8 +33,7 @@ Windows users can follow these simple steps:
 ![cmd_pygame](https://user-images.githubusercontent.com/57386502/100330994-a49a4a00-2ff5-11eb-8894-4db15f895085.png)
 
 3) Navigate to the folder where the main.py file is located and run python3 main.py in terminal
-<img src="./New folder/run in cmd.png">
-
+![run in cmd](https://user-images.githubusercontent.com/57386502/100331005-a6fca400-2ff5-11eb-82ce-1ec99c5e5710.png)
 To disable background music, please set music_flag to False. You can find this variable in main.py
 
 You can also check below video where I give a tour of the chess game using Visual Studio code:
