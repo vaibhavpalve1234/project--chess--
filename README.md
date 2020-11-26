@@ -30,7 +30,7 @@ Windows users can follow these simple steps:
 
 
 2) For pygame, run pip install pygame. If it is already installed, we will get output as below. If it is not installed, Windows will automatically begin its installation
-<img src="./New folder/cmd_pygame.png">
+![cmd_pygame](https://user-images.githubusercontent.com/57386502/100330994-a49a4a00-2ff5-11eb-8894-4db15f895085.png)
 
 3) Navigate to the folder where the main.py file is located and run python3 main.py in terminal
 <img src="./New folder/run in cmd.png">
