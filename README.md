@@ -26,7 +26,8 @@ https://www.pygame.org/wiki/GettingStarted
 Windows users can follow these simple steps:
 
 1) Run python3 command, if it is already installed, we will get output as below. If it is not installed, Windows will automatically begin its installation
-<img src="New folder/cmd_python3.png">
+![cmd_python3](https://user-images.githubusercontent.com/57386502/100330868-7e74aa00-2ff5-11eb-9382-0ebf1fd3a500.png)
+
 
 2) For pygame, run pip install pygame. If it is already installed, we will get output as below. If it is not installed, Windows will automatically begin its installation
 <img src="./New folder/cmd_pygame.png">
