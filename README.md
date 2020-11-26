@@ -26,15 +26,14 @@ https://www.pygame.org/wiki/GettingStarted
 Windows users can follow these simple steps:
 
 1) Run python3 command, if it is already installed, we will get output as below. If it is not installed, Windows will automatically begin its installation
-<!-- <img src="New folder/cmd_python3.png"> -->
-![Getting Started](./images/img.jpg)
+<img src="New folder/cmd_python3.png">
 
 2) For pygame, run pip install pygame. If it is already installed, we will get output as below. If it is not installed, Windows will automatically begin its installation
-<!-- <img src="./New folder/cmd_pygame.png"> -->
-![Getting Started](./images/img.jpg)
+<img src="./New folder/cmd_pygame.png">
+
 3) Navigate to the folder where the main.py file is located and run python3 main.py in terminal
-<!-- <img src="./New folder/run in cmd.png"> -->
-![Getting Started](./images/img.jpg)
+<img src="./New folder/run in cmd.png">
+
 To disable background music, please set music_flag to False. You can find this variable in main.py
 
 You can also check below video where I give a tour of the chess game using Visual Studio code:
