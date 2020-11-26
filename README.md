@@ -1,6 +1,6 @@
 # Chess Game using Python
 
-This repo is for Chess game project made using Pygame and it uses OOPs principles as there are classes for GUI and sound.
+This repo is for Chess game project made using Pygame and it uses OOPs principles as there are classes for GUI.
 
 It is just plain and simple 2 player chess but it supports all chess features like move validation, Check-Checkmate-Stalemate detection, Pawn promotion, Castling and En-passant.
 
