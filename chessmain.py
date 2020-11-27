@@ -1,7 +1,6 @@
-# from python import * 
 import pygame as p
+
 import chessEngine
-import turtle
 
 WIDTH = HEIGHT = 512
 
@@ -169,7 +168,8 @@ def drawText(screen,text):
     screen.blit(textObject,textLocation.move(2,2))
 
 
+if __name__ == "__main__":
 
 
-main()
+    main()
     
