@@ -37,18 +37,20 @@ class GameState:
             self.blackKingLocation=(move.endRow,move.endCol)
 
         if move.isPawnPromotion:
-            i= input( " Promote to Q,R,B OR N")
+            i= input( " Promote to Q, R, B OR N :")
             # self.board[move.endRow][move.endCol] = move.pieceMoved[0] + promotedpiece
             self.board[move.endRow][move.endCol] = move.pieceMoved[0] + i
-        #
+        #en passant Mopve
         if move.isEnpassantMove:
             self.board[move.startRow][move.endCol] = "--"
 
         #update enpasspossible variable
-        if move.pieceMoved[1]=="p" and abs(move.startRow - move.endCol)==2:
-            self.enpasspossible = (( move.startRow + move.endRow)//2 , move.startCol)
+        if move.pieceMoved[1]=="p" and abs(move.startRow - move.endRow)==2:#only on two square pawn advance
+        # if move.pieceMoved[1]=="p" and abs(move.startRow - move.endCol)==2:
+            self.enpassantPossible = (( move.startRow + move.endRow)//2 , move.startCol)
         else:
             self.enpassantPossible = ()
+        # castling 
         if move.isCastleMove:
             if move.endCol- move.startCol ==2:
                 self.board[move.endRow][move.endCol-1] = self.board[move.endRow][move.endCol+1]
@@ -71,10 +73,11 @@ class GameState:
             self.whiteKingLocation=(move.startRow,move.startCol)
         elif move.pieceMoved=="bK":
             self.blackKingLocation=(move.startRow,move.startCol)
+            #undo the move
         if move.isEnpassantMove:
-            self.board[move.endRow][move.endCol] == "--"
+            self.board[move.endRow][move.endCol] = "--"
             self.board[move.startRow][move.endCol]= move.pieceCaptured
-            self.enpassPossible=(move.endRow,move.endCol)
+            self.enpassantPossible=(move.endRow,move.endRow)
         if move.pieceMoved[1] =="p" and abs(move.startRow - move.endRow)==2 :
             self.enpassantPossible=() 
         self.castleRightsLog.pop()
@@ -194,14 +197,13 @@ class GameState:
                 if self.board[r-1][c-1][0]=="b":
                     moves.append(Move((r,c),(r-1,c-1),self.board))
                 elif (r-1,c-1)==self.enpassantPossible:
-                    moves.append(Move((r,c),(r-1,c-1),self.board,isEnpassantPossible = True))
-
-
+                    moves.append(Move((r,c),(r-1,c-1),self.board,isEnpassantMove = True))
             if c+1<=7:
                 if self.board[r-1][c+1][0]=="b":
                     moves.append(Move((r,c),(r-1,c+1),self.board))
                 elif (r-1,c+1)==self.enpassantPossible:
-                    moves.append(Move((r,c),(r-1,c+1),self.board,isEnpassantPossible = True))
+                    moves.append(Move((r,c),(r-1,c+1),self.board,isEnpassantMove = True))
+
         else:
             if self.board[r+1][c]=="--":#1 square is qmpty
                 moves.append(Move((r,c),(r+1,c),self.board))
@@ -211,12 +213,12 @@ class GameState:
                 if self.board[r+1][c-1][0]=="w":
                     moves.append(Move((r,c),(r+1,c-1),self.board))
                 elif (r+1,c-1)==self.enpassantPossible:
-                    moves.append(Move((r,c),(r+1,c-1),self.board,isEnpassantPossible = True))
+                    moves.append(Move((r,c),(r+1,c-1),self.board,isEnpassantMove = True))
             if c+1<=7:
                 if self.board[r+1][c+1][0]=="w":
                     moves.append(Move((r,c),(r+1,c+1),self.board))
                 elif (r+1,c+1)==self.enpassantPossible:
-                    moves.append(Move((r,c),(r+1,c+1),self.board,isEnpassantPossible = True))
+                    moves.append(Move((r,c),(r+1,c+1),self.board,isEnpassantMove = True))
        # add pawn promotion later
 
 # get all the rook  moves for Rook located at 
@@ -275,9 +277,9 @@ class GameState:
         kingMoves=((-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1))
         allycolor="w" if self.whiteToMove else "b"
         for i in range(8):
-            endRow=r + kingMoves[i][0]
-            endCol=c + kingMoves[i][1]
-            if 0 <= endRow <8 and 0 <= endCol < 8:
+            endRow = r + kingMoves[i][0]
+            endCol = c + kingMoves[i][1]
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
                 endpiece = self.board[endRow][endCol]
                 if endpiece[0] != allycolor :
                     moves.append(Move((r,c),(endRow,endCol),self.board))
@@ -340,26 +342,30 @@ class Move():
                 "e": 4, "f": 5, "g": 6, "h": 7}
     colsToFiles = {v: k for k, v in filesToCols.items()}
 
-    def __init__(self, startSq, endSq, board, isEnpassantPossible = False, isCastleMove = False):
+    def __init__(self, startSq, endSq, board, isEnpassantMove = False, isCastleMove = False):
         self.startRow = startSq[0]
         self.startCol = startSq[1]
         self.endRow = endSq[0]
         self.endCol = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
         self.pieceCaptured = board[self.endRow][self.endCol]
-
+        #pawn Promotion
         self.isPawnPromotion =  (self.pieceMoved == "wp" and  self.endRow == 0) or (self.pieceMoved == "bp" and self.endRow == 7) 
-        self.isEnpassantMove =  isEnpassantPossible
+        #en passant move
+        self.isEnpassantMove =  isEnpassantMove 
         if self.isEnpassantMove:
             self.pieceCaptured = "wp" if  self.pieceMoved == "bp" else "bp"
+        #castling
         self.isCastleMove=isCastleMove
+
         self.moveID=(self.startRow*1000+self.startCol*100+self.endRow*10+self.endCol)
         # print(self.moveID)
+
+        
     def __eq__(self,other):
         if isinstance(other,Move):
             return self.moveID==other.moveID
         return False
-
 
     def getChessNotation(self):
         # you can add to make this like real chess notation
